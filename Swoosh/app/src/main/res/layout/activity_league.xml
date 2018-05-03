@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LeagueActivity">
+    tools:context=".controller.LeagueActivity">
 
     <ImageView
         android:id="@+id/imageView3"
@@ -65,11 +65,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/swoosh_toggle"
+            android:onClick="onMensClicked"
             android:text="@string/mens"
             android:textColor="@android:color/white"
             android:textOff="@string/mens"
-            android:textOn="@string/mens"
-            tools:onClick="onMensClicked" />
+            android:textOn="@string/mens" />
 
         <ToggleButton
             android:id="@+id/womensLeagueBtn"

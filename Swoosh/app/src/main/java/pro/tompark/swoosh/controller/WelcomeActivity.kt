@@ -1,8 +1,9 @@
-package pro.tompark.swoosh
+package pro.tompark.swoosh.controller
 
 import android.content.Intent
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_welcome.*
+import pro.tompark.swoosh.R
 
 class WelcomeActivity : BaseActivity() {
 

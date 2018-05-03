@@ -1,10 +1,12 @@
-package pro.tompark.swoosh
+package pro.tompark.swoosh.controller
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_league.*
+import pro.tompark.swoosh.utilities.EXTRA_LEAGUE
+import pro.tompark.swoosh.R
 
 class LeagueActivity : BaseActivity() {
 
