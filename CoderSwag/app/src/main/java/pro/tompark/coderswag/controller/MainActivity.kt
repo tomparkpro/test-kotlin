@@ -1,22 +1,21 @@
 package pro.tompark.coderswag.controller
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import pro.tompark.coderswag.R
-import pro.tompark.coderswag.model.Category
+import pro.tompark.coderswag.adapters.CategoryAdapter
 import pro.tompark.coderswag.services.DataService
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var adapter: ArrayAdapter<Category>
+    lateinit var adapter: CategoryAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, DataService.categories)
+        adapter = CategoryAdapter(this, DataService.categories)
 
         catetoryListView.adapter = adapter
     }
