@@ -1,10 +1,12 @@
-package pro.tompark.smack
+package pro.tompark.smack.controller
 
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_create_user.*
+import pro.tompark.smack.R
+import pro.tompark.smack.services.AuthService
 import java.util.*
 
 class CreateUserActivity : AppCompatActivity() {
@@ -48,7 +50,11 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserClicked(view: View) {
+        AuthService.registerUser(this, "tom@tompark.pro", "123456") { complete ->
+            if (complete) {
 
+            }
+        }
     }
 }
 
