@@ -1,6 +1,9 @@
 package pro.tompark.smack.controller
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.content.LocalBroadcastManager
@@ -16,6 +19,7 @@ import io.socket.client.IO
 import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import pro.tompark.smack.R
 import pro.tompark.smack.model.Channel
@@ -29,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
     val socket = IO.socket(SOCKET_URL)
     lateinit var channelAdapter: ArrayAdapter<Channel>
+    var selectedChannel : Channel? = null
 
     private fun setupAdapter() {
         channelAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, MessageService.channels)
@@ -48,6 +53,12 @@ class MainActivity : AppCompatActivity() {
         toggle.syncState()
 
         setupAdapter()
+
+        channel_list.setOnItemClickListener { _, _, position, _ ->
+            selectedChannel = MessageService.channels[position]
+            drawer_layout.closeDrawer(GravityCompat.START)
+            updateWithChannel()
+        }
 
         if (App.prefs.isLoggedIn) {
             AuthService.findUserByEmail(this) { }
@@ -75,13 +86,22 @@ class MainActivity : AppCompatActivity() {
                 userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginBtnNavHeader.text = "Logout"
 
-                MessageService.getChannels(context) { complete ->
+                MessageService.getChannels { complete ->
                     if (complete) {
-                        channelAdapter.notifyDataSetChanged()
+                        if (MessageService.channels.count() > 0) {
+                            selectedChannel = MessageService.channels[0]
+                            channelAdapter.notifyDataSetInvalidated()
+                            updateWithChannel()
+                        }
                     }
                 }
             }
         }
+    }
+
+    fun updateWithChannel() {
+        mainChannelName.text = "#${selectedChannel?.name}"
+        // download messages for channel
     }
 
     override fun onBackPressed() {
@@ -112,7 +132,7 @@ class MainActivity : AppCompatActivity() {
             val dialogView = layoutInflater.inflate(R.layout.add_channel_dialog, null)
 
             builder.setView(dialogView)
-                    .setPositiveButton("Add") { dialog: DialogInterface?, which: Int ->
+                    .setPositiveButton("Add") { _, _: Int ->
                         // perform some logic when clicked
                         val nameTextField = dialogView.findViewById<EditText>(R.id.addChannelNametxt)
                         val descTextField = dialogView.findViewById<EditText>(R.id.addChannelDescTxt)
@@ -122,7 +142,7 @@ class MainActivity : AppCompatActivity() {
                         // create channel with the channel name and description
                         socket.emit("newChannel", channelName, channelDesc)
                     }
-                    .setNegativeButton("Cancel") { dialog: DialogInterface?, which: Int ->
+                    .setNegativeButton("Cancel") { _, _: Int ->
                         // cancel and close the dialog
                     }
                     .show()
