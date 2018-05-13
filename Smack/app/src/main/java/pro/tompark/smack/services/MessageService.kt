@@ -6,6 +6,7 @@ import com.android.volley.toolbox.JsonArrayRequest
 import org.json.JSONException
 import pro.tompark.smack.controller.App
 import pro.tompark.smack.model.Channel
+import pro.tompark.smack.model.Message
 import pro.tompark.smack.utilities.URL_GET_CHANNELS
 
 /**
@@ -18,6 +19,7 @@ import pro.tompark.smack.utilities.URL_GET_CHANNELS
 object MessageService {
 
     val channels = ArrayList<Channel>()
+    val messages = ArrayList<Message>()
 
     fun getChannels(complete: (Boolean) -> Unit) {
 
