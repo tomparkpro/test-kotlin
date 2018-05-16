@@ -2,6 +2,7 @@ package pro.tompark.android.dinnerdecider
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             var newFood = addFoodTxt.text.toString()
             foodList.add(newFood)
             addFoodTxt.text.clear()
-            println(foodList)
+            Log.d("TAG", "This is a test log")
         }
     }
 }
